@@ -1,0 +1,94 @@
+[gd_scene load_steps=9 format=3 uid="uid://clj0d58vy6rpc"]
+
+[ext_resource type="Script" uid="uid://c3f4k2hiht4er" path="res://background.gd" id="1_bpugw"]
+[ext_resource type="Script" uid="uid://bgbvhdvir81wt" path="res://hand.gd" id="1_i7s6n"]
+[ext_resource type="Texture2D" uid="uid://gfgl1xh3r7tf" path="res://sprites/hand.png" id="2_xehqc"]
+[ext_resource type="Texture2D" uid="uid://c344awfwce2ak" path="res://sprites/characterPlayerN.png" id="3_splo0"]
+[ext_resource type="Texture2D" uid="uid://wu2y4n477gcp" path="res://sprites/iconDamage.png" id="4_bpugw"]
+[ext_resource type="Texture2D" uid="uid://hi8yacjhhern" path="res://sprites/characterOpponentN.png" id="4_eq6nc"]
+[ext_resource type="Texture2D" uid="uid://dva7n2qmdid0k" path="res://sprites/iconHealing.png" id="6_gjjrj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_splo0"]
+size = Vector2(743, 376)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_bpugw")
+
+[node name="hand" type="CharacterBody2D" parent="."]
+script = ExtResource("1_i7s6n")
+
+[node name="handSprite" type="Sprite2D" parent="hand"]
+light_mask = 512
+visibility_layer = 512
+z_index = -1
+texture = ExtResource("2_xehqc")
+
+[node name="handArea" type="Area2D" parent="hand"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hand/handArea"]
+position = Vector2(-102.5, 63)
+shape = SubResource("RectangleShape2D_splo0")
+
+[node name="playerIcon" type="Node2D" parent="."]
+z_index = -2
+
+[node name="playerSprite" type="Sprite2D" parent="playerIcon"]
+z_index = -2
+position = Vector2(138, 101)
+texture = ExtResource("3_splo0")
+
+[node name="damageSprite" type="Sprite2D" parent="playerIcon"]
+z_index = 10
+position = Vector2(145.00002, 99)
+scale = Vector2(1.0895271, 1.0895271)
+texture = ExtResource("4_bpugw")
+
+[node name="damageLabel" type="Label" parent="playerIcon"]
+z_index = 11
+y_sort_enabled = true
+offset_left = 132.99998
+offset_top = 81.0
+offset_right = 194.72188
+offset_bottom = 116.490074
+scale = Vector2(1.3524915, 1.3524915)
+text = "null"
+
+[node name="healingSprite" type="Sprite2D" parent="playerIcon"]
+z_index = 10
+position = Vector2(151, 97.99999)
+scale = Vector2(0.91385156, 0.91385144)
+texture = ExtResource("6_gjjrj")
+
+[node name="opponentIcon" type="Node2D" parent="."]
+z_index = -2
+position = Vector2(0, 13)
+
+[node name="opponentSprite" type="Sprite2D" parent="opponentIcon"]
+z_index = -2
+position = Vector2(1016, 88)
+texture = ExtResource("4_eq6nc")
+
+[node name="damageSprite" type="Sprite2D" parent="opponentIcon"]
+z_index = 10
+position = Vector2(1013, 84.000015)
+scale = Vector2(1.1870694, 1.1870694)
+texture = ExtResource("4_bpugw")
+
+[node name="damageLabel" type="Label" parent="opponentIcon"]
+z_index = 11
+y_sort_enabled = true
+offset_left = 1002.9999
+offset_top = 72.000015
+offset_right = 1064.7217
+offset_bottom = 107.4901
+scale = Vector2(1.3524915, 1.3524915)
+text = "null"
+
+[node name="healingSprite" type="Sprite2D" parent="opponentIcon"]
+z_index = 10
+position = Vector2(1019, 85)
+scale = Vector2(0.99493253, 0.99493253)
+texture = ExtResource("6_gjjrj")
+
+[connection signal="mouse_entered" from="hand/handArea" to="hand" method="_on_hand_area_mouse_entered"]
+[connection signal="mouse_exited" from="hand/handArea" to="hand" method="_on_hand_area_mouse_exited"]

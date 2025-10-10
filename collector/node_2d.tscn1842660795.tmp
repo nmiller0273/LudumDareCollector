@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://csape8hitcbkv"]
+
+[ext_resource type="Script" uid="uid://bejervsoyufa" path="res://node.gd" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://dvwgkb61i2tyi" path="res://node_2.gd" id="2_0e48y"]
+[ext_resource type="Texture2D" uid="uid://dmg6pq12vseum" path="res://sprites/cardGuy.png" id="3_0hol4"]
+[ext_resource type="Script" uid="uid://bmu1ro18wh13m" path="res://sprite_2d.gd" id="4_q6r6c"]
+[ext_resource type="Script" uid="uid://ca68v4617plkt" path="res://character_body_2d.gd" id="5_q6r6c"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Node2" type="Node" parent="."]
+script = ExtResource("2_0e48y")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("1_wtcfe")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+motion_mode = 1
+script = ExtResource("5_q6r6c")
+speed = null
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("3_0hol4")
+script = ExtResource("4_q6r6c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]

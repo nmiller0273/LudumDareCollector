@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://yy8yl08xra32"]
+
+[ext_resource type="Script" uid="uid://c1pg260bps2i6" path="res://deck.gd" id="1_1sd1x"]
+[ext_resource type="Script" uid="uid://btf55bjikm8ge" path="res://end_turn_button.gd" id="2_4nmu6"]
+
+[node name="Node2D" type="Node2D"]
+z_index = -4
+
+[node name="deck" type="Node2D" parent="."]
+script = ExtResource("1_1sd1x")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Button" type="Button" parent="."]
+z_index = 4
+offset_left = 924.0
+offset_top = 520.0
+offset_right = 1002.0
+offset_bottom = 551.0
+scale = Vector2(2.1383555, 2.1383555)
+text = "End Turn"
+script = ExtResource("2_4nmu6")
+
+[connection signal="draw_card_start_of_turn" from="Button" to="deck" method="_on_button_draw_card_start_of_turn"]

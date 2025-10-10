@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://csape8hitcbkv"]
+
+[ext_resource type="Script" uid="uid://bejervsoyufa" path="res://node.gd" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://dvwgkb61i2tyi" path="res://node_2.gd" id="2_0e48y"]
+[ext_resource type="Texture2D" uid="uid://dmg6pq12vseum" path="res://sprites/cardGuy.png" id="3_0hol4"]
+[ext_resource type="Script" uid="uid://bmu1ro18wh13m" path="res://sprite_2d.gd" id="4_q6r6c"]
+[ext_resource type="Script" uid="uid://ca68v4617plkt" path="res://character_body_2d.gd" id="5_q6r6c"]
+
+[sub_resource type="GDScript" id="GDScript_q6r6c"]
+script/source = "extends Area2D
+
+func _ready():
+    connect(\"mouse_entered\", self, \"_on_mouse_entered\")
+    connect(\"mouse_exited\", self, \"_on_mouse_exited\")
+
+func _on_mouse_entered():
+    print(\"Mouse entered!\")
+
+func _on_mouse_exited():
+    print(\"Mouse exited!\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6r6c"]
+size = Vector2(150, 250)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Node2" type="Node" parent="."]
+script = ExtResource("2_0e48y")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("1_wtcfe")
+
+[node name="Card" type="CharacterBody2D" parent="."]
+motion_mode = 1
+script = ExtResource("5_q6r6c")
+
+[node name="Sprite2D" type="Sprite2D" parent="Card"]
+texture = ExtResource("3_0hol4")
+script = ExtResource("4_q6r6c")
+
+[node name="Area2D" type="Area2D" parent="Card"]
+script = SubResource("GDScript_q6r6c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Card/Area2D"]
+shape = SubResource("RectangleShape2D_q6r6c")
+
+[connection signal="area_entered" from="Card/Area2D" to="Card" method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Card/Area2D" to="Card" method="_on_area_2d_area_exited"]

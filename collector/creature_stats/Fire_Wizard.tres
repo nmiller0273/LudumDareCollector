@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="creatureStats" load_steps=2 format=3 uid="uid://dbuxolfpx2p6"]
+
+[ext_resource type="Script" uid="uid://coqkf7a2054x3" path="res://creatureResource.gd" id="1_48s6x"]
+
+[resource]
+script = ExtResource("1_48s6x")
+attack = 5
+health = 4
+metadata/_custom_type_script = "uid://coqkf7a2054x3"
