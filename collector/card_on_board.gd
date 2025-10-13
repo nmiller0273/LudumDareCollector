@@ -27,8 +27,6 @@ func setup(value: String, loc: int, playedBy: String) -> void:
 		
 func die():
 	# add to opponents deck
-	print("owie")
-	print(creature_played_by)
 	emit_signal("creature_add_to_deck", id, creature_played_by)
 	queue_free()
 

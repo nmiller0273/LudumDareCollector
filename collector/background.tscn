@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://clj0d58vy6rpc"]
+[gd_scene load_steps=10 format=3 uid="uid://clj0d58vy6rpc"]
 
 [ext_resource type="Script" uid="uid://c3f4k2hiht4er" path="res://background.gd" id="1_bpugw"]
 [ext_resource type="Script" uid="uid://bgbvhdvir81wt" path="res://hand.gd" id="1_i7s6n"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://wu2y4n477gcp" path="res://sprites/iconDamage.png" id="4_bpugw"]
 [ext_resource type="Texture2D" uid="uid://hi8yacjhhern" path="res://sprites/characterOpponentN.png" id="4_eq6nc"]
 [ext_resource type="Texture2D" uid="uid://dva7n2qmdid0k" path="res://sprites/iconHealing.png" id="6_gjjrj"]
+[ext_resource type="Texture2D" uid="uid://bvcw1r33aly4n" path="res://sprites/iconHealth.png" id="7_vvxqx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_splo0"]
 size = Vector2(743, 376)
@@ -15,6 +16,7 @@ size = Vector2(743, 376)
 script = ExtResource("1_bpugw")
 
 [node name="hand" type="CharacterBody2D" parent="."]
+visible = false
 script = ExtResource("1_i7s6n")
 
 [node name="handSprite" type="Sprite2D" parent="hand"]
@@ -59,6 +61,22 @@ position = Vector2(151, 97.99999)
 scale = Vector2(0.91385156, 0.91385144)
 texture = ExtResource("6_gjjrj")
 
+[node name="hpSprite" type="Sprite2D" parent="playerIcon"]
+z_index = -2
+position = Vector2(232.5, 165.5)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("7_vvxqx")
+
+[node name="hpLabel" type="Label" parent="playerIcon"]
+z_index = -2
+offset_left = 200.0
+offset_top = 157.0
+offset_right = 240.0
+offset_bottom = 180.0
+scale = Vector2(1.5, 1.5)
+text = "15"
+horizontal_alignment = 1
+
 [node name="opponentIcon" type="Node2D" parent="."]
 z_index = -2
 position = Vector2(0, 13)
@@ -89,6 +107,22 @@ z_index = 10
 position = Vector2(1019, 85)
 scale = Vector2(0.99493253, 0.99493253)
 texture = ExtResource("6_gjjrj")
+
+[node name="hpSprite" type="Sprite2D" parent="opponentIcon"]
+z_index = -2
+position = Vector2(929.25, 152.25)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("7_vvxqx")
+
+[node name="hpLabel" type="Label" parent="opponentIcon"]
+z_index = -2
+offset_left = 894.75
+offset_top = 141.75
+offset_right = 934.75
+offset_bottom = 164.75
+scale = Vector2(1.5, 1.5)
+text = "15"
+horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="hand/handArea" to="hand" method="_on_hand_area_mouse_entered"]
 [connection signal="mouse_exited" from="hand/handArea" to="hand" method="_on_hand_area_mouse_exited"]

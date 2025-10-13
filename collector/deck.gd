@@ -89,7 +89,6 @@ func player_draw():
 func opponent_draw():
 	if opponent_deck.is_empty():
 		return
-	print(opponent_deck)
 	if len(OpponentTurn.opponent_hand) >= 7:
 		return
 	var id = opponent_deck.pop_back()

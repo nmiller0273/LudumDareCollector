@@ -4,7 +4,6 @@ var player_health = 15
 var opponent_health = 15
 
 func _ready():
-	print("ra")
 	BoardState.opponent_takes_damage.connect(_on_opponent_takes_damage)
 	BoardState.player_takes_damage.connect(_on_player_takes_damage)
 	$playerIcon/damageSprite.modulate.a = 0
@@ -14,10 +13,9 @@ func _ready():
 	$playerIcon/healingSprite.modulate.a = 0
 	$opponentIcon/healingSprite.modulate.a = 0
 	
-func _on_player_takes_damage(damage):
-	print("damage take signal sent ", damage)
-		
-	player_health = player_health + damage
+func _on_player_takes_damage(damage):		
+	player_health = player_health - damage
+	$playerIcon/hpLabel.text = str(player_health)
 	if damage > 0:
 		$playerIcon/damageSprite.modulate = Color(1, 1-(float(damage) / 7.2), 0, 1)
 		$playerIcon/damageLabel.modulate.a = 1
@@ -41,10 +39,8 @@ func _on_player_takes_damage(damage):
 			$playerIcon/damageLabel.modulate.a  -= 0.05
 	
 func _on_opponent_takes_damage(damage):
-	print("damage take signal sent ", damage)
-	print(BoardState.opponent_health)
-
-	opponent_health = opponent_health + damage
+	opponent_health = opponent_health - damage
+	$opponentIcon/hpLabel.text = str(opponent_health)
 	if damage > 0:
 		$opponentIcon/damageSprite.modulate = Color(1, 1-(float(damage) / 7.2), 0, 1)
 		$opponentIcon/damageLabel.modulate.a = 1

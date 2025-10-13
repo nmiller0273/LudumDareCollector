@@ -16,7 +16,6 @@ func combat_do(player_turn: String):
 		
 		if creature_player != null:
 			card_player = creature_player.get_node("cardOnBoard")
-			print("null")
 			
 		if creature_player != null and creature_opponent != null:
 			card_opponent.hit_target(card_player.id)

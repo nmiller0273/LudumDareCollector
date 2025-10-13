@@ -71,7 +71,6 @@ func getCreature(creatureName, spot, playedBy):
 
 func processCard(id, played_by, target = null) -> bool:
 	if ResourceLoader.exists("res://creature_stats/" + id + ".tres"):
-		print("played creature" + id)
 		if played_by == "Player":
 			if null in playerCreatures:
 				for k in range(len(playerCreatures)):
@@ -82,7 +81,6 @@ func processCard(id, played_by, target = null) -> bool:
 			else:
 				print("no room!")
 				return false
-			print(playerCreatures)
 			return true
 		else:
 			if null in opponentCreatures:
