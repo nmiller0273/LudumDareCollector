@@ -19,6 +19,8 @@ func first_time_setup(sets_in_play : Array):
 	BoardState.creature_add_to_deck_signal_two.connect(_on_creature_add_to_deck_signal_two)
 	BoardState.player_draw.connect(_on_player_draw_signal)
 	BoardState.opponent_draw.connect(_on_opponent_draw_signal)
+	BoardState.player_dies.connect(_on_player_dies_signal)
+	BoardState.opponent_dies.connect(_on_opponent_dies_signal)
 	self.connect("opponent_draw_signal", Callable(OpponentTurn, "_on_opponent_draw"))
 	card_ids.append_array(boo_id)
 	if "halloween" in sets_in_play:
@@ -149,3 +151,9 @@ func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
 			card_in_deck_sprite.z_index = card_in_deck_sprites_opponent[0].z_index - 1
 		add_child(card_in_deck_sprite)
 		card_in_deck_sprites_opponent.push_front(card_in_deck_sprite)
+
+func _on_player_dies_signal():
+	print("oo oo aa aa")
+	
+func _on_opponent_dies_signal():
+	print("aa aa oo oo")

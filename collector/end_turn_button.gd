@@ -6,6 +6,8 @@ signal draw_card_start_of_turn
 
 func _pressed() -> void:
 	var deck_instance = get_node("/root/BoardState")
+	BoardState.player_dies.connect(_on_player_dies_signal)
+	BoardState.opponent_dies.connect(_on_opponent_dies_signal)
 	self.disabled = true
 	var comb = creature_combat.new()
 	add_child(comb)
@@ -23,3 +25,9 @@ func _pressed() -> void:
 func _ready():
 	release_focus()
 	mouse_filter = Control.MOUSE_FILTER_PASS
+	
+func _on_player_dies_signal():
+	queue_free()
+	
+func _on_opponent_dies_signal():
+	queue_free()

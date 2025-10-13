@@ -2,6 +2,8 @@ extends Node
 
 signal player_takes_damage(damage: int)
 signal opponent_takes_damage(damage: int)
+signal player_dies()
+signal opponent_dies()
 
 var player_health: int
 		
@@ -38,6 +40,25 @@ signal opponent_draw(draw_type)
 func start_of_game():
 	opponent_health = 15
 	player_health = 15
+
+func end_of_game(winner: String):
+	var spoils_for_winner = []
+	
+	for creature in playerCreatures:
+		if creature != null:
+			spoils_for_winner.append(creature)
+			creature = null
+			
+	for creature in opponentCreatures:
+		if creature != null:
+			spoils_for_winner.append(creature)
+			creature = null
+	
+	for card in spoils_for_winner:
+		print(card, " ", winner)
+		card.queue_free()
+		emit_signal("creature_add_to_deck_signal_two", card.get_node("cardOnBoard").id, winner)
+		await get_tree().create_timer(0.2).timeout
 
 func getCreature(creatureName, spot, playedBy):
 	if playedBy == "Player":
@@ -83,27 +104,18 @@ func change_opponent_health(change):
 	emit_signal("opponent_takes_damage", change)
 	opponent_health -= change
 	if opponent_health <= 0:
-		print("ooo i died")
+		emit_signal("opponent_dies")
+		end_of_game("Player")
 		
 func change_player_health(change):
 	emit_signal("player_takes_damage", change)
 	player_health -= change
 	if player_health <= 0:
-		print("ooo i died")
+		emit_signal("player_dies")
+		end_of_game("Opponent")
 
 func _on_creature_add_to_deck(creature_id, target_player):
 	emit_signal("creature_add_to_deck_signal_two", creature_id, target_player)
-	
-func round_over(winner):
-	var to_add_to_deck = []
-	for k in range(len(playerCreatures)):
-		if playerCreatures[k] != null:
-			to_add_to_deck.append(playerCreatures[k].id)
-		if opponentCreatures[k] != null:
-			to_add_to_deck.append(opponentCreatures[k].id)
-	
-	if winner == "Player":
-		print("a")
 		
 			
 func spell_lookup(spell_id: int, played_by: String, target = null):
