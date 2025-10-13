@@ -4,6 +4,10 @@ signal player_takes_damage(damage: int)
 signal opponent_takes_damage(damage: int)
 signal player_dies()
 signal opponent_dies()
+signal played_card(card_id)
+signal creature_add_to_deck_signal_two(creature_id, target_player)
+signal player_draw(draw_type)
+signal opponent_draw(draw_type)
 
 var player_health: int
 		
@@ -31,11 +35,6 @@ var spell_index = {
 	"Laser_Volley" : 14,
 	"Let_Loose": 15
 }
-
-signal played_card(card_id)
-signal creature_add_to_deck_signal_two(creature_id, target_player)
-signal player_draw(draw_type)
-signal opponent_draw(draw_type)
 
 func start_of_game():
 	opponent_health = 15
@@ -115,7 +114,10 @@ func change_player_health(change):
 		end_of_game("Opponent")
 
 func _on_creature_add_to_deck(creature_id, target_player):
-	emit_signal("creature_add_to_deck_signal_two", creature_id, target_player)
+	if target_player == "Opponent":
+		emit_signal("creature_add_to_deck_signal_two", creature_id, "Player")
+	else:
+		emit_signal("creature_add_to_deck_signal_two", creature_id, "Opponent")
 		
 			
 func spell_lookup(spell_id: int, played_by: String, target = null):

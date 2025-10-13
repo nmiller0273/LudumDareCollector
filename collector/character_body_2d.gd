@@ -9,7 +9,12 @@ var id = ""
 var handIndex: int
 var hover_position = Vector2(300, 500)
 
+signal add_to_deck(card_id, target_player)
+
 func set_id(value: String) -> void:
+	BoardState.player_dies.connect(_on_player_dies_signal)
+	BoardState.opponent_dies.connect(_on_opponent_dies_signal)
+	self.add_to_deck.connect(BoardState._on_creature_add_to_deck)
 	id = value
 	$cardSprite.set_card_display(id)
 	if ResourceLoader.exists("res://creature_stats/" + id + ".tres"):
@@ -80,3 +85,12 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 
 	move_and_slide()
+	
+
+func _on_player_dies_signal():
+	emit_signal("add_to_deck", id, "Player")
+	queue_free()
+	
+func _on_opponent_dies_signal():
+	emit_signal("add_to_deck", id, "Opponent")
+	queue_free()

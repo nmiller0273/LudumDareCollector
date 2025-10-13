@@ -127,7 +127,7 @@ func _on_opponent_draw_signal(draw_type):
 		pass
 	
 func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
-	if target_player == "Opponent":
+	if target_player == "Player":
 		player_deck.push_front(creature_id)
 		for card_in_deck_sprite in card_in_deck_sprites_player:
 			card_in_deck_sprite.position = card_in_deck_sprite.position - Vector2(0, 10)
@@ -151,9 +151,12 @@ func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
 			card_in_deck_sprite.z_index = card_in_deck_sprites_opponent[0].z_index - 1
 		add_child(card_in_deck_sprite)
 		card_in_deck_sprites_opponent.push_front(card_in_deck_sprite)
+	
+	print("player deck: ", player_deck)
+	print("opponent deck: ", opponent_deck)
 
 func _on_player_dies_signal():
-	print("oo oo aa aa")
+	pass
 	
 func _on_opponent_dies_signal():
-	print("aa aa oo oo")
+	pass
