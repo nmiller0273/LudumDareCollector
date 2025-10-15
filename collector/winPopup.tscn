@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3p5wvtludhhf"]
+
+[ext_resource type="Script" uid="uid://di3kryqcutgbx" path="res://win_popup.gd" id="1_llrgc"]
+[ext_resource type="Texture2D" uid="uid://7vnhsisjftxd" path="res://sprites/banner.png" id="2_c7rnk"]
+
+[node name="Control" type="Control"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_llrgc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(569, 170)
+scale = Vector2(2, 2)
+texture = ExtResource("2_c7rnk")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 432.0
+offset_top = 135.0
+offset_right = 570.0
+offset_bottom = 158.0
+scale = Vector2(2, 2)
+text = "YOU LOSE!"
+horizontal_alignment = 1

@@ -16,6 +16,7 @@ var opponent_health: int
 var playerCreatures = [null,null,null]
 var opponentCreatures = [null,null,null]
 var creature_on_board = preload("res://boardCards.tscn")
+var win_banner = preload("res://winPopup.tscn")
 
 var spell_index = {
 	"Boo" : 0,
@@ -52,6 +53,10 @@ func end_of_game(winner: String):
 		if creature != null:
 			spoils_for_winner.append(creature)
 			creature = null
+	
+	var end_banner = win_banner.instantiate()
+	add_child(end_banner)
+	end_banner.on_win(winner)
 	
 	for card in spoils_for_winner:
 		print(card, " ", winner)
