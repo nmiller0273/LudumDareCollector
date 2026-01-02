@@ -27,7 +27,7 @@ func _on_player_takes_damage(damage):
 		$playerIcon/damageSprite.modulate = Color(1, 1-(float(damage) / 7.2), 0, 1)
 		$playerIcon/damageLabel.modulate.a = 1
 		$playerIcon/damageSprite.rotation = randi() % 360
-		$playerIcon/damageSprite.scale = $playerIcon/damageSprite.scale * randf_range(0.8, 1.2)
+		$playerIcon/damageSprite.scale = randf_range(0.8, 1.2)
 		$playerIcon/damageLabel.text = str(damage)
 		for k in range(20):
 			await get_tree().create_timer(0.075).timeout
@@ -38,7 +38,7 @@ func _on_player_takes_damage(damage):
 		$playerIcon/healingSprite.modulate.a = 1
 		$playerIcon/damageLabel.modulate.a = 1
 		$playerIcon/healingSprite.rotation = randi_range(0, 90)
-		$playerIcon/healingSprite.scale = $playerIcon/healingSprite.scale * randf_range(0.8, 1.2)
+		$playerIcon/healingSprite.scale = randf_range(0.8, 1.2)
 		$playerIcon/damageLabel.text = str(damage)
 		for k in range(20):
 			await get_tree().create_timer(0.075).timeout

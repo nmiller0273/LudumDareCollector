@@ -43,6 +43,14 @@ func first_time_setup(sets_in_play : Array):
 func game_setup():
 	BoardState.start_of_game()
 	
+	for card_instance in card_in_deck_sprites_opponent:
+		card_instance.queue_free()
+	for card_instance in card_in_deck_sprites_player:
+		card_instance.queue_free()
+	
+	card_in_deck_sprites_player = []
+	card_in_deck_sprites_opponent = []
+		
 	var z_ind_reference = 0
 	
 	for card_in_deck in player_deck:
@@ -156,10 +164,12 @@ func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
 
 func _on_player_dies_signal():
 	await get_tree().create_timer(4).timeout
+	hand_fill = [null, null, null, null, null, null, null,]
 	game_setup()
 	pass
 	
 func _on_opponent_dies_signal():
 	await get_tree().create_timer(4).timeout
+	hand_fill = [null, null, null, null, null, null, null,]
 	game_setup()
 	pass
