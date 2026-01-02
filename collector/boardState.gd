@@ -2,6 +2,7 @@ extends Node
 
 signal player_takes_damage(damage: int)
 signal opponent_takes_damage(damage: int)
+signal game_start_signal()
 signal player_dies()
 signal opponent_dies()
 signal played_card(card_id)
@@ -38,6 +39,9 @@ var spell_index = {
 }
 
 func start_of_game():
+	self.playerCreatures = [null,null,null]
+	self.opponentCreatures = [null,null,null]
+	emit_signal("game_start_signal")
 	opponent_health = 15
 	player_health = 15
 

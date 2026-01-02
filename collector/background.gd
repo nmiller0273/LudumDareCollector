@@ -6,12 +6,19 @@ var opponent_health = 15
 func _ready():
 	BoardState.opponent_takes_damage.connect(_on_opponent_takes_damage)
 	BoardState.player_takes_damage.connect(_on_player_takes_damage)
+	BoardState.game_start_signal.connect(_on_game_start)
 	$playerIcon/damageSprite.modulate.a = 0
 	$playerIcon/damageLabel.modulate.a = 0
 	$opponentIcon/damageSprite.modulate.a = 0
 	$opponentIcon/damageLabel.modulate.a = 0
 	$playerIcon/healingSprite.modulate.a = 0
 	$opponentIcon/healingSprite.modulate.a = 0
+	
+func _on_game_start():
+	player_health = 15
+	opponent_health = 15
+	$playerIcon/hpLabel.text = str(player_health)
+	$opponentIcon/hpLabel.text = str(opponent_health)	
 	
 func _on_player_takes_damage(damage):		
 	player_health = player_health - damage
