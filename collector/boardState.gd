@@ -18,6 +18,9 @@ var playerCreatures = [null,null,null]
 var opponentCreatures = [null,null,null]
 var creature_on_board = preload("res://boardCards.tscn")
 var win_banner = preload("res://winPopup.tscn")
+var targeter = preload("res://target_selecter.tscn")
+
+var has_target = [2, 4, 5, 6, 11, 12, 15, 16]
 
 var spell_index = {
 	"Boo" : 0,
@@ -35,7 +38,8 @@ var spell_index = {
 	"Stimpack" : 12,
 	"Inderdimensional_Knowledge" : 13,
 	"Laser_Volley" : 14,
-	"Let_Loose": 15
+	"Let_Loose": 15,
+	"Curse": 16
 }
 
 func start_of_game():
@@ -44,6 +48,8 @@ func start_of_game():
 	emit_signal("game_start_signal")
 	opponent_health = 15
 	player_health = 15
+	var targeter_guy = targeter.instantiate()
+	add_child(targeter_guy)
 
 func end_of_game(winner: String):
 	var spoils_for_winner = []
@@ -103,6 +109,8 @@ func processCard(id, played_by, target = null) -> bool:
 				return false
 			return true
 	else:
+		if spell_index[id] in has_target:
+			print("oo")
 		spell_lookup(spell_index[id], played_by, target)
 		return true
 
@@ -256,14 +264,16 @@ func spell_lookup(spell_id: int, played_by: String, target = null):
 					creature.update_stats(-4, 0)
 			change_opponent_health(4)
 			return
-			
+		
+		# this whole section needs refactoring
+		
 		for creature in opponentCreatures:
 			if (creature != null) and (shotsLeft > 0):
-				if randf() <  (1/float(numTargets)):
+				if randf() < (1/float(numTargets)):
 					creature.update_stats(-4, 0)
 					shotsLeft -= 1
-				if shotsLeft == 0:
-					return
+					if shotsLeft == 0:
+						return
 		change_opponent_health(4)
 		return
 	

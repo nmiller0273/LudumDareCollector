@@ -16,7 +16,6 @@ size = Vector2(743, 376)
 script = ExtResource("1_bpugw")
 
 [node name="hand" type="CharacterBody2D" parent="."]
-visible = false
 script = ExtResource("1_i7s6n")
 
 [node name="handSprite" type="Sprite2D" parent="hand"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://eecpo5bodtyw"]
+
+[ext_resource type="Script" uid="uid://b6fdn7103unmw" path="res://target_selecter.gd" id="1_l32ma"]
+[ext_resource type="Texture2D" uid="uid://ilmnvhccy62l" path="res://sprites/target.png" id="1_man8i"]
+
+[node name="targetSelecter" type="Node2D"]
+script = ExtResource("1_l32ma")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(7, 3)
+texture = ExtResource("1_man8i")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 41.0
+offset_top = 20.0
+offset_right = 81.0
+offset_bottom = 43.0
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 37.0
+offset_top = -35.0
+offset_right = 77.0
+offset_bottom = -12.0
