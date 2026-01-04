@@ -48,8 +48,6 @@ func start_of_game():
 	emit_signal("game_start_signal")
 	opponent_health = 15
 	player_health = 15
-	var targeter_guy = targeter.instantiate()
-	add_child(targeter_guy)
 
 func end_of_game(winner: String):
 	var spoils_for_winner = []
@@ -109,10 +107,18 @@ func processCard(id, played_by, target = null) -> bool:
 				return false
 			return true
 	else:
-		if spell_index[id] in has_target:
-			print("oo")
-		spell_lookup(spell_index[id], played_by, target)
-		return true
+		if played_by == "Player":
+			if spell_index[id] in has_target:
+				var targeter_guy = targeter.instantiate()
+				targeter_guy.target_clicked.connect(_on_spell_target_recieved)
+				add_child(targeter_guy)
+				print("oo")
+			spell_lookup(spell_index[id], played_by, target)
+			return true
+		else:
+			# implement opponent spell casting
+			print("opponent spells not yet implemented. how did you get here?")
+			return false
 
 func change_opponent_health(change):
 	emit_signal("opponent_takes_damage", change)
@@ -134,7 +140,10 @@ func _on_creature_add_to_deck(creature_id, target_player):
 	else:
 		emit_signal("creature_add_to_deck_signal_two", creature_id, "Opponent")
 		
-			
+func _on_spell_target_recieved(slot_targeted, side_targeted):
+	# implement this!
+	print("o!")
+	
 func spell_lookup(spell_id: int, played_by: String, target = null):
 	print("spell lookup for: ", spell_id)
 	# theres defo a better way to do this but it is what it is
