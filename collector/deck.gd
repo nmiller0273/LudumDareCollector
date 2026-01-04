@@ -14,6 +14,15 @@ var card_in_deck_sprites_opponent = []
 
 signal opponent_draw_signal(card_id)
 
+func get_card_back_deck(card_id):
+	if card_id in wizard_card_ids:
+		return "res://sprites/deckWizard.png"
+	elif card_id in halloween_card_ids:
+		return "res://sprites/deckHalloween.png"
+	else:
+		return "res://sprites/deckBlank.png"
+	
+
 func first_time_setup(sets_in_play : Array):
 	BoardState.played_card.connect(_on_card_played)
 	BoardState.creature_add_to_deck_signal_two.connect(_on_creature_add_to_deck_signal_two)
@@ -50,13 +59,15 @@ func game_setup():
 	
 	card_in_deck_sprites_player = []
 	card_in_deck_sprites_opponent = []
+	player_deck.shuffle()
+	opponent_deck.shuffle()
 		
 	var z_ind_reference = 0
 	
 	for card_in_deck in player_deck:
 		z_ind_reference = -100
 		var card_in_deck_sprite = Sprite2D.new()
-		card_in_deck_sprite.texture = preload("res://sprites/deckBlank.png")
+		card_in_deck_sprite.texture = load(get_card_back_deck(card_in_deck))
 		card_in_deck_sprite.position = Vector2(175, (600 - len(card_in_deck_sprites_player)*10))
 		card_in_deck_sprite.z_index = z_ind_reference
 		card_in_deck_sprite.z_as_relative = false
@@ -67,7 +78,7 @@ func game_setup():
 	for card_in_deck in opponent_deck:
 		z_ind_reference = -100
 		var card_in_deck_sprite = Sprite2D.new()
-		card_in_deck_sprite.texture = preload("res://sprites/deckBlank.png")
+		card_in_deck_sprite.texture = load(get_card_back_deck(card_in_deck))
 		card_in_deck_sprite.position = Vector2(1050, (600 - len(card_in_deck_sprites_opponent)*10))
 		card_in_deck_sprite.z_index = z_ind_reference
 		z_ind_reference = z_ind_reference + 1
@@ -134,33 +145,37 @@ func _on_opponent_draw_signal(draw_type):
 		pass
 	
 func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
+	var card_in_deck_sprite_new = Sprite2D.new()
+	card_in_deck_sprite_new.texture = load(get_card_back_deck(creature_id))
+	card_in_deck_sprite_new.z_as_relative = false
+	card_in_deck_sprite_new.z_index = -100
+	add_child(card_in_deck_sprite_new)
+	
+	# i am reasonably confident this can be refactored further to be smaller, but for now
+	# this works well enough
+	
 	if target_player == "Player":
-		player_deck.push_front(creature_id)
+		card_in_deck_sprite_new.position = Vector2(175, 600)
+		
 		for card_in_deck_sprite in card_in_deck_sprites_player:
 			card_in_deck_sprite.position = card_in_deck_sprite.position - Vector2(0, 10)
-		var card_in_deck_sprite = Sprite2D.new()
-		card_in_deck_sprite.texture = preload("res://sprites/deckBlank.png")
-		card_in_deck_sprite.position = Vector2(175, 600)
-		card_in_deck_sprite.z_as_relative = false
+			
 		if card_in_deck_sprites_player.is_empty() != true:
-			card_in_deck_sprite.z_index = card_in_deck_sprites_player[0].z_index - 1
-		add_child(card_in_deck_sprite)
-		card_in_deck_sprites_player.push_front(card_in_deck_sprite)
+			card_in_deck_sprite_new.z_index = card_in_deck_sprites_player[0].z_index - 1
+			
+		player_deck.push_front(creature_id)
+		card_in_deck_sprites_player.push_front(card_in_deck_sprite_new)
+		
 	else:
-		opponent_deck.push_front(creature_id)
+		card_in_deck_sprite_new.position = Vector2(1050, 600)
 		for card_in_deck_sprite in card_in_deck_sprites_opponent:
 			card_in_deck_sprite.position = card_in_deck_sprite.position - Vector2(0, 10)
-		var card_in_deck_sprite = Sprite2D.new()
-		card_in_deck_sprite.texture = preload("res://sprites/deckBlank.png")
-		card_in_deck_sprite.position = Vector2(1050, 600)
-		card_in_deck_sprite.z_as_relative = false
+			
 		if card_in_deck_sprites_opponent.is_empty() != true:
-			card_in_deck_sprite.z_index = card_in_deck_sprites_opponent[0].z_index - 1
-		add_child(card_in_deck_sprite)
-		card_in_deck_sprites_opponent.push_front(card_in_deck_sprite)
-	
-	print("player deck: ", player_deck)
-	print("opponent deck: ", opponent_deck)
+			card_in_deck_sprite_new.z_index = card_in_deck_sprites_opponent[0].z_index - 1
+			
+		opponent_deck.push_front(creature_id)
+		card_in_deck_sprites_opponent.push_front(card_in_deck_sprite_new)
 
 func _on_player_dies_signal():
 	await get_tree().create_timer(4).timeout
