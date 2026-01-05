@@ -56,6 +56,7 @@ func update_stats(healthChange: int, attackChange: int):
 			await get_tree().create_timer(0.075).timeout
 			$healingSprite.modulate.a -= 0.05
 			$damageLabel.modulate.a  -= 0.05
+			
 	if health <= 0:
 		die()
 	

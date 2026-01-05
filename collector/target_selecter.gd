@@ -4,8 +4,10 @@ var slot_targeted = -1
 var side_targeted = "None"
 var clicked = false
 var target = [-1, "None"]
+var spell = ""
+var played_by = ""
 
-signal target_clicked(target_slot, target_side)
+signal target_clicked(target_slot, target_side, spell, played_by)
 
 func _process(delta: float) -> void:
 	position = get_global_mouse_position()
@@ -44,5 +46,8 @@ func _process(delta: float) -> void:
 	
 	if target == [slot_targeted, side_targeted] and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		if slot_targeted != -1 and side_targeted != "None":
-			emit_signal("target_clicked", slot_targeted, side_targeted)
-			queue_free()
+			emit_signal("target_clicked", slot_targeted, side_targeted, spell, played_by)
+			
+func _on_valid_target():
+	queue_free()
+	

@@ -9,6 +9,7 @@ signal played_card(card_id)
 signal creature_add_to_deck_signal_two(creature_id, target_player)
 signal player_draw(draw_type)
 signal opponent_draw(draw_type)
+signal valid_target()
 
 var player_health: int
 		
@@ -111,6 +112,9 @@ func processCard(id, played_by, target = null) -> bool:
 			if spell_index[id] in has_target:
 				var targeter_guy = targeter.instantiate()
 				targeter_guy.target_clicked.connect(_on_spell_target_recieved)
+				valid_target.connect(targeter_guy._on_valid_target)
+				targeter_guy.spell = spell_index[id]
+				targeter_guy.played_by = played_by
 				add_child(targeter_guy)
 				print("oo")
 			spell_lookup(spell_index[id], played_by, target)
@@ -140,9 +144,57 @@ func _on_creature_add_to_deck(creature_id, target_player):
 	else:
 		emit_signal("creature_add_to_deck_signal_two", creature_id, "Opponent")
 		
-func _on_spell_target_recieved(slot_targeted, side_targeted):
+func _on_spell_target_recieved(target_slot, side_targeted, spell_id, played_by):
 	# implement this!
 	print("o!")
+	if side_targeted == "Opponent":
+		if opponentCreatures[target_slot] == null:
+			print("oops no target! opponent side")
+		else:
+			emit_signal("valid_target")
+			target_spell_lookup(opponentCreatures[target_slot], side_targeted, spell_id, played_by)
+	else:
+		if playerCreatures[target_slot] == null:
+			print("oops no target! player side")
+		else:
+			emit_signal("valid_target")
+			target_spell_lookup(playerCreatures[target_slot], side_targeted, spell_id, played_by)
+			
+	
+func target_spell_lookup(target, side_targeted, spell_id, played_by):
+	
+	print(target)
+	
+	if spell_id == 6:
+		# fire ball! - deal 6 to target
+		if target == "Opponent":
+			change_opponent_health(-6)
+			return
+		if target == "Player":
+			change_player_health(-6)
+			return
+		target.update_stats(-6, 0)
+	
+	if spell_id == 12:
+		# stimpack - restore 10 health to target
+		if target != "Opponent" and target != "Player":
+			target.update_stats(10, 0)
+			return
+		if target == "Opponent":
+			change_opponent_health(10)
+			return
+		change_player_health(10)
+		return
+	
+	if spell_id == 15:
+		# let loose - give target 5 attack
+		target.get_node("cardOnBoard").update_stats(0, 5)
+		return
+	
+	if spell_id == 16:
+		# curse - give creature -3 attack
+		target.get_node("cardOnBoard").update_stats(0, -3)
+		return
 	
 func spell_lookup(spell_id: int, played_by: String, target = null):
 	print("spell lookup for: ", spell_id)
@@ -175,16 +227,6 @@ func spell_lookup(spell_id: int, played_by: String, target = null):
 		await get_tree().create_timer(0.1).timeout
 		emit_signal("opponent_draw", "creature")
 		await get_tree().create_timer(0.1).timeout
-	
-	if spell_id == 6:
-		# fire ball! - deal 6 to target
-		if target == "Opponent":
-			change_opponent_health(-6)
-			return
-		if target == "Player":
-			change_player_health(-6)
-			return
-		target.update_stats(-6, 0)
 	
 	if spell_id == 7:
 		# avalanche - deal 3 to all
@@ -232,16 +274,6 @@ func spell_lookup(spell_id: int, played_by: String, target = null):
 		emit_signal("opponent_draw", "spell")
 		await get_tree().create_timer(0.1).timeout
 		return
-	
-	if spell_id == 12:
-		# stimpack - restore 10 health to target
-		if target != "Opponent" and target != "Player":
-			target.update_stats(10, 0)
-			return
-		if target == "Opponent":
-			change_opponent_health(10)
-			return
-		change_player_health(10)
 		
 	if spell_id == 13:
 		# interdimensional knowledge - draw 2 cards
@@ -284,16 +316,6 @@ func spell_lookup(spell_id: int, played_by: String, target = null):
 					if shotsLeft == 0:
 						return
 		change_opponent_health(4)
-		return
-	
-	if spell_id == 15:
-		# let loose - give target 5 attack
-		target.update_stats(0, 5)
-		return
-	
-	if spell_id == 16:
-		# curse - give creature -3 attack
-		target.update_stats(0, -3)
 		return
 		
 	print("spell not found")
