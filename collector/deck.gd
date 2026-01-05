@@ -11,8 +11,18 @@ var opponent_deck = []
 var hand_fill = [null, null, null, null, null, null, null,]
 var card_in_deck_sprites_player = []
 var card_in_deck_sprites_opponent = []
+var spell_descriptions = {}
 
 signal opponent_draw_signal(card_id)
+
+func import_spell_data():
+	var file = FileAccess.open("res://spell_text.txt", FileAccess.READ)
+	while !file.eof_reached():
+		var data_set = Array(file.get_csv_line())
+		if len(data_set) != 2:
+			break
+		spell_descriptions[data_set[0]] = data_set[1]
+	file.close()
 
 func get_card_back_deck(card_id):
 	if card_id in wizard_card_ids:
@@ -30,6 +40,7 @@ func first_time_setup(sets_in_play : Array):
 	BoardState.opponent_draw.connect(_on_opponent_draw_signal)
 	BoardState.player_dies.connect(_on_player_dies_signal)
 	BoardState.opponent_dies.connect(_on_opponent_dies_signal)
+	import_spell_data()
 	self.connect("opponent_draw_signal", Callable(OpponentTurn, "_on_opponent_draw"))
 	card_ids.append_array(boo_id)
 	if "halloween" in sets_in_play:
@@ -100,6 +111,8 @@ func player_draw():
 			var newCard = hand_card_scene.instantiate()
 			add_child(newCard)
 			var id = player_deck.pop_back()
+			if not ResourceLoader.exists("res://creature_stats/" + id + ".tres"):
+				newCard.get_node("handCard").spell_text = spell_descriptions[id]
 			newCard.get_node("handCard").setup(id, i) 
 			hand_fill[i] = id
 			card_in_deck_sprites_player.pop_back().queue_free()

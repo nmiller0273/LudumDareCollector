@@ -10,6 +10,7 @@ signal creature_add_to_deck_signal_two(creature_id, target_player)
 signal player_draw(draw_type)
 signal opponent_draw(draw_type)
 signal valid_target()
+signal spell_cancel()
 
 var player_health: int
 		
@@ -68,7 +69,6 @@ func end_of_game(winner: String):
 	end_banner.on_win(winner)
 	
 	for card in spoils_for_winner:
-		print(card, " ", winner)
 		card.queue_free()
 		emit_signal("creature_add_to_deck_signal_two", card.get_node("cardOnBoard").id, winner)
 		await get_tree().create_timer(0.2).timeout
@@ -112,11 +112,11 @@ func processCard(id, played_by, target = null) -> bool:
 			if spell_index[id] in has_target:
 				var targeter_guy = targeter.instantiate()
 				targeter_guy.target_clicked.connect(_on_spell_target_recieved)
+				targeter_guy.spell_cancelled.connect(_on_spell_cancelled)
 				valid_target.connect(targeter_guy._on_valid_target)
 				targeter_guy.spell = spell_index[id]
 				targeter_guy.played_by = played_by
 				add_child(targeter_guy)
-				print("oo")
 			spell_lookup(spell_index[id], played_by, target)
 			return true
 		else:
@@ -143,10 +143,12 @@ func _on_creature_add_to_deck(creature_id, target_player):
 		emit_signal("creature_add_to_deck_signal_two", creature_id, "Player")
 	else:
 		emit_signal("creature_add_to_deck_signal_two", creature_id, "Opponent")
+
+func _on_spell_cancelled():
+	emit_signal("spell_cancel")
 		
 func _on_spell_target_recieved(target_slot, side_targeted, spell_id, played_by):
 	# implement this!
-	print("o!")
 	if side_targeted == "Opponent":
 		if opponentCreatures[target_slot] == null:
 			print("oops no target! opponent side")
@@ -162,9 +164,6 @@ func _on_spell_target_recieved(target_slot, side_targeted, spell_id, played_by):
 			
 	
 func target_spell_lookup(target, side_targeted, spell_id, played_by):
-	
-	print(target)
-	
 	if spell_id == 6:
 		# fire ball! - deal 6 to target
 		if target == "Opponent":
@@ -197,15 +196,12 @@ func target_spell_lookup(target, side_targeted, spell_id, played_by):
 		return
 	
 func spell_lookup(spell_id: int, played_by: String, target = null):
-	print("spell lookup for: ", spell_id)
 	# theres defo a better way to do this but it is what it is
 	if spell_id == 0:
 		# boo - instantly kill opponent
 		if played_by == "Player":
 			change_opponent_health(100)
-			print("KILL ENEMY")
 			return
-		print("Kill me D:")
 		change_player_health(100)
 		return
 		

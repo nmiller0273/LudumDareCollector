@@ -6,13 +6,9 @@ var played_cards = 0
 
 func opponentTurnDo():
 	played_cards = 0
-	print("yay its my turn!")
-	print(len(opponent_hand), opponent_hand)
-	print(len(opponent_hand_type))
 	for creature in BoardState.opponentCreatures:
 		if creature == null:
 			for k in range(len(opponent_hand)):
-				print(opponent_hand_type[k], " ", opponent_hand[k])
 				if opponent_hand_type[k] == "Creature":
 					played_cards += 1
 					BoardState.processCard(opponent_hand[k], "Opponent")

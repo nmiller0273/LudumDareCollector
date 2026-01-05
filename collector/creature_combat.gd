@@ -7,7 +7,6 @@ func combat_do(player_turn: String):
 	var creature_opponent = null
 	var card_player = null
 	var card_opponent = null
-	print("combat starts")
 	for k in range(len(BoardState.opponentCreatures)):
 		creature_opponent = BoardState.opponentCreatures[k]
 		if creature_opponent != null:

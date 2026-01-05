@@ -47,12 +47,15 @@ texture = ExtResource("4_bpugw")
 [node name="damageLabel" type="Label" parent="playerIcon"]
 z_index = 11
 y_sort_enabled = true
-offset_left = 132.99998
-offset_top = 81.0
-offset_right = 194.72188
-offset_bottom = 116.490074
+offset_left = 112.0
+offset_top = 85.0
+offset_right = 162.27759
+offset_bottom = 117.53257
 scale = Vector2(1.3524915, 1.3524915)
-text = "null"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+text = "01"
+horizontal_alignment = 1
 
 [node name="healingSprite" type="Sprite2D" parent="playerIcon"]
 z_index = 10
@@ -73,6 +76,8 @@ offset_top = 157.0
 offset_right = 240.0
 offset_bottom = 180.0
 scale = Vector2(1.5, 1.5)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
 text = "15"
 horizontal_alignment = 1
 
@@ -94,12 +99,15 @@ texture = ExtResource("4_bpugw")
 [node name="damageLabel" type="Label" parent="opponentIcon"]
 z_index = 11
 y_sort_enabled = true
-offset_left = 1002.9999
+offset_left = 985.0
 offset_top = 72.000015
-offset_right = 1064.7217
+offset_right = 1028.3087
 offset_bottom = 107.4901
 scale = Vector2(1.3524915, 1.3524915)
-text = "null"
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+text = "01"
+horizontal_alignment = 1
 
 [node name="healingSprite" type="Sprite2D" parent="opponentIcon"]
 z_index = 10
@@ -120,6 +128,8 @@ offset_top = 141.75
 offset_right = 934.75
 offset_bottom = 164.75
 scale = Vector2(1.5, 1.5)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
 text = "15"
 horizontal_alignment = 1
 
