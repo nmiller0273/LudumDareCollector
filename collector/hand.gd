@@ -25,7 +25,6 @@ func _process(delta: float) -> void:
 	
 	move_and_slide()
 
-
 func _on_hand_area_mouse_entered() -> void:
 	is_hovered = true
 

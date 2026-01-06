@@ -15,7 +15,6 @@ signal spell_cancel()
 var player_health: int
 		
 var opponent_health: int
-		
 var playerCreatures = [null,null,null]
 var opponentCreatures = [null,null,null]
 var creature_on_board = preload("res://boardCards.tscn")

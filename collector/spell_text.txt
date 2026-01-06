@@ -6,7 +6,7 @@ Future_Visions,Peek the top card of your deck. You may then choose to shuffle. D
 Full_Moon,Draw 3 creatures.
 Spark_of_Life,Placeholder
 Haunting,Placeholder
-Fire_Ball!,Deal 6 damage to target creature.
+Fire_Ball,Deal 6 damage to target creature.
 Avalanche,Deal 3 damage to all creatures.
 Raise_dead,Add two 2/2 skeletons to your hand.
 Restore_Life,Restore 5 health to all friendly characters.

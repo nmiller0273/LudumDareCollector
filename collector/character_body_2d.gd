@@ -50,7 +50,7 @@ func _on_area_2d_mouse_entered() -> void:
 func _on_area_2d_mouse_exited() -> void:
 	is_hovered = false
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	
 	if spell_hovering == true:
 		if $glowSprite.modulate.a > 0:
