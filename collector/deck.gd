@@ -36,6 +36,7 @@ func get_card_back_deck(card_id):
 func first_time_setup(sets_in_play : Array):
 	BoardState.played_card.connect(_on_card_played)
 	BoardState.creature_add_to_deck_signal_two.connect(_on_creature_add_to_deck_signal_two)
+	OpponentTurn.add_to_deck_signal.connect(_on_creature_add_to_deck_signal_two)
 	BoardState.player_draw.connect(_on_player_draw_signal)
 	BoardState.opponent_draw.connect(_on_opponent_draw_signal)
 	BoardState.player_dies.connect(_on_player_dies_signal)
@@ -110,6 +111,7 @@ func player_draw():
 		if hand_fill[i] == null:
 			var newCard = hand_card_scene.instantiate()
 			add_child(newCard)
+			newCard.get_node("handCard").add_to_deck.connect(_on_creature_add_to_deck_signal_two)
 			var id = player_deck.pop_back()
 			if not ResourceLoader.exists("res://creature_stats/" + id + ".tres"):
 				newCard.get_node("handCard").spell_text = spell_descriptions[id]
@@ -157,9 +159,12 @@ func _on_opponent_draw_signal(draw_type):
 		#check cards until find a spell
 		pass
 	
-func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
+func _on_creature_add_to_deck_signal_two(card_id, target_player) -> void:
+	print(card_id, target_player)
+	# INFO where target_player is who recieves the card
+	
 	var card_in_deck_sprite_new = Sprite2D.new()
-	card_in_deck_sprite_new.texture = load(get_card_back_deck(creature_id))
+	card_in_deck_sprite_new.texture = load(get_card_back_deck(card_id))
 	card_in_deck_sprite_new.z_as_relative = false
 	card_in_deck_sprite_new.z_index = -100
 	add_child(card_in_deck_sprite_new)
@@ -176,7 +181,7 @@ func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
 		if card_in_deck_sprites_player.is_empty() != true:
 			card_in_deck_sprite_new.z_index = card_in_deck_sprites_player[0].z_index - 1
 			
-		player_deck.push_front(creature_id)
+		player_deck.push_front(card_id)
 		card_in_deck_sprites_player.push_front(card_in_deck_sprite_new)
 		
 	else:
@@ -187,7 +192,7 @@ func _on_creature_add_to_deck_signal_two(creature_id, target_player) -> void:
 		if card_in_deck_sprites_opponent.is_empty() != true:
 			card_in_deck_sprite_new.z_index = card_in_deck_sprites_opponent[0].z_index - 1
 			
-		opponent_deck.push_front(creature_id)
+		opponent_deck.push_front(card_id)
 		card_in_deck_sprites_opponent.push_front(card_in_deck_sprite_new)
 
 func _on_player_dies_signal():

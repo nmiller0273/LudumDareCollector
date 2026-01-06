@@ -19,7 +19,6 @@ signal add_to_deck(card_id, target_player)
 func set_id(value: String) -> void:
 	BoardState.player_dies.connect(_on_player_dies_signal)
 	BoardState.opponent_dies.connect(_on_opponent_dies_signal)
-	self.add_to_deck.connect(BoardState._on_creature_add_to_deck)
 	id = value
 	$cardSprite.set_card_display(id)
 	if ResourceLoader.exists("res://creature_stats/" + id + ".tres"):
@@ -109,16 +108,18 @@ func _process(delta: float) -> void:
 	move_and_slide()
 	
 
+# INFO : these all need both arguments so they can share reciever function with
+# INFO : the code for receiving cards on board
 func _on_player_dies_signal():
 	emit_signal("add_to_deck", id, "Player")
 	queue_free()
 	
 func _on_opponent_dies_signal():
-	emit_signal("add_to_deck", id, "Opponent")
+	emit_signal("add_to_deck", id, "Player")
 	queue_free()
 
 func _on_valid_spell_target():
-	emit_signal("add_to_deck", id, "Player")
+	emit_signal("add_to_deck", id, "Opponent")
 	queue_free()
 
 func _on_spell_cancel():

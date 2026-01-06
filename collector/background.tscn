@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://clj0d58vy6rpc"]
+[gd_scene load_steps=11 format=3 uid="uid://clj0d58vy6rpc"]
 
 [ext_resource type="Script" uid="uid://c3f4k2hiht4er" path="res://background.gd" id="1_bpugw"]
 [ext_resource type="Script" uid="uid://bgbvhdvir81wt" path="res://hand.gd" id="1_i7s6n"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://hi8yacjhhern" path="res://sprites/characterOpponentN.png" id="4_eq6nc"]
 [ext_resource type="Texture2D" uid="uid://dva7n2qmdid0k" path="res://sprites/iconHealing.png" id="6_gjjrj"]
 [ext_resource type="Texture2D" uid="uid://bvcw1r33aly4n" path="res://sprites/iconHealth.png" id="7_vvxqx"]
+[ext_resource type="Script" uid="uid://baueorfjf6v7k" path="res://fasf.gd" id="9_cdpnt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_splo0"]
 size = Vector2(743, 376)
@@ -132,6 +133,15 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 text = "15"
 horizontal_alignment = 1
+
+[node name="opponenthand" type="RichTextLabel" parent="."]
+z_index = 10
+offset_left = 896.0
+offset_top = 208.0
+offset_right = 1131.0
+offset_bottom = 581.0
+text = "aaa"
+script = ExtResource("9_cdpnt")
 
 [connection signal="mouse_entered" from="hand/handArea" to="hand" method="_on_hand_area_mouse_entered"]
 [connection signal="mouse_exited" from="hand/handArea" to="hand" method="_on_hand_area_mouse_exited"]

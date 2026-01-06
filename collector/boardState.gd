@@ -44,6 +44,8 @@ var spell_index = {
 }
 
 func start_of_game():
+	# INFO creates empty board and sets player and opponent health to default
+	# INFO sends signal to background to set player and opponent health sprites up
 	self.playerCreatures = [null,null,null]
 	self.opponentCreatures = [null,null,null]
 	emit_signal("game_start_signal")
@@ -51,6 +53,8 @@ func start_of_game():
 	player_health = 15
 
 func end_of_game(winner: String):
+	# INFO removes cards from the board and adds them to the winners deck
+	# INFO creates and deletes the winner banner
 	var spoils_for_winner = []
 	
 	for creature in playerCreatures:
