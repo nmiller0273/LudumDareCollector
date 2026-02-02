@@ -4,6 +4,7 @@ var id = ""
 var health = 1
 var attack = 1
 var creature_played_by = ""
+var creature_stats
 signal creature_add_to_deck(creature_id, target_player)
 
 func setup(value: String, loc: int, playedBy: String) -> void:
@@ -14,7 +15,6 @@ func setup(value: String, loc: int, playedBy: String) -> void:
 	id = value
 	$creatureSprite.set_card_display(id)	
 	var stat_file_name = "res://creature_stats/" + id + ".tres"
-	var creature_stats
 	creature_stats = load(stat_file_name).duplicate()
 	health = creature_stats.health
 	attack = creature_stats.attack

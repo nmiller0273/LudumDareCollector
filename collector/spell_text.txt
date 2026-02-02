@@ -4,7 +4,7 @@ Let_Loose,Give target creature +5 attack.
 Vampiric_Beguilement,Take control of an enemy creature.
 Future_Visions,Peek the top card of your deck. You may then choose to shuffle. Draw a card.
 Full_Moon,Draw 3 creatures.
-Spark_of_Life,Placeholder
+Spark_Of_Life,Restore target creature to full health.
 Haunting,Placeholder
 Fire_Ball,Deal 6 damage to target creature.
 Avalanche,Deal 3 damage to all creatures.

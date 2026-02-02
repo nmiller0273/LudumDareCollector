@@ -167,6 +167,15 @@ func _on_spell_target_recieved(target_slot, side_targeted, spell_id, played_by):
 			
 	
 func target_spell_lookup(target, side_targeted, spell_id, played_by):
+	
+	if spell_id == 5:
+		# spark of life - restore target creature to full health
+		if target.get_node("cardOnBoard").health <= target.get_node("cardOnBoard").creature_stats.health:
+			target.get_node("cardOnBoard").update_stats((target.get_node("cardOnBoard").creature_stats.health - target.get_node("cardOnBoard").health), 0)
+			return
+		print("health above max!")
+		return
+		
 	if spell_id == 6:
 		# fire ball! - deal 6 to target
 		if target == "Opponent":

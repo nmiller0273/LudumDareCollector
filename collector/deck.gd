@@ -1,6 +1,6 @@
 extends Node2D
 
-const halloween_card_ids = ["Zombwell", "Dracula", "Ghost", "Bigfoot", "Invisible_Guy", "Mummy", "Frankenstein", "Werewolf", "Curse", "Let_Loose"]
+const halloween_card_ids = ["Zombwell", "Dracula", "Ghost", "Bigfoot", "Invisible_Guy", "Mummy", "Frankenstein", "Werewolf", "Curse", "Let_Loose", "Spark_Of_Life"]
 const wizard_card_ids = ["Death_Wizard", "Summoner_Wizard", "Nature_Wizard", "Fire_Wizard"]
 const boo_id = ["Boo"]
 var hand_card_scene = preload("res://cardInHand.tscn") 
